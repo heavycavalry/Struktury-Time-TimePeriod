@@ -50,40 +50,14 @@ namespace Time
 
         public int CompareTo([AllowNull] Time other)
         {
-            if (Object.ReferenceEquals(other, null))
-            {
-                return 1;
-            }
-            if (this.Hours > other.Hours)
-            {
-                return 1;
-            }
 
-            if (this.Hours < other.Hours)
-            {
-                return -1;
-            }
+            int hd = this.Hours - other.Hours;
+            int md = this.Minutes - other.Minutes;
+            int sd = this.Seconds - other.Seconds;
 
-            if (this.Minutes > other.Minutes)
-            {
-                return 1;
-            }
-
-            if (this.Minutes < other.Minutes)
-            {
-                return -1;
-            }
-
-            if (this.Seconds > other.Seconds)
-            {
-                return 1;
-            }
-
-            if (this.Seconds < other.Seconds)
-            {
-                return -1;
-            }
-
+            if (hd != 0) return hd;
+            if (md != 0) return md;
+            if (sd != 0) return sd;
             return 0;
 
         }
