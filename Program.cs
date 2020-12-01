@@ -70,5 +70,15 @@ namespace Time
             }
             return false;
         }
+
+        override public bool Equals([AllowNull] object o)
+        {
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Hours, Minutes, Seconds);
+        }
     }
 }
