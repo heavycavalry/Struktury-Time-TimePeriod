@@ -7,7 +7,11 @@ namespace Time
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Time u = new Time(1, 2, 3);
+
+            Console.WriteLine(u);
+
+            Console.WriteLine($"{-1:D2}");
         }
     }
 

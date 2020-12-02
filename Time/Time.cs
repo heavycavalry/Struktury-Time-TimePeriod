@@ -15,6 +15,12 @@ namespace Time
             Seconds = seconds;
             Hours = hours;
             Minutes = minutes;
+
+            if (hours > 24 || hours < 0 || minutes >= 60 || minutes < 0 || seconds >= 60 || seconds < 0) { throw new ArgumentOutOfRangeException(); }
+
+            //if (hours > 10) { $"{hours:D2}"}
+
+
         }
 
         public Time(string timeString)
@@ -25,7 +31,7 @@ namespace Time
             Seconds = byte.Parse(choppedString[2]);
         }
 
-        override public string ToString() => $"{Hours}:{Minutes}:{Seconds}";
+        override public string ToString() => $"{Hours:D2}:{Minutes:D2}:{Seconds:D2}";
 
 
         public static bool operator ==(Time leftTime, Time rightTime) => leftTime.Equals(rightTime);

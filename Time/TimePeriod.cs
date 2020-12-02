@@ -15,6 +15,8 @@ namespace Time
         public long minutes { get => (totalSeconds % 3600) / 60; }
         public long seconds { get => totalSeconds % 60; }
 
+        public TimePeriod(long seconds) => totalSeconds = seconds;
+
         public TimePeriod(long h, long m, long s) => totalSeconds = ToSeconds(h, m, s);
 
         public TimePeriod(Time t1, Time t2)
@@ -37,7 +39,7 @@ namespace Time
             totalSeconds = ToSeconds(hours, minutes, seconds);
         }
 
-        override public string ToString() => $"{hours}:{minutes}:{seconds}";
+        override public string ToString() => $"{hours}:{minutes:D2}:{seconds:D2}";
 
         public static long ToSeconds(Time t) => t.Hours * 3600 + t.Minutes * 60 + t.Seconds;
         public static long ToSeconds(long h, long m, long s) => h * 3600 + m * 60 + s;
@@ -73,7 +75,8 @@ namespace Time
         public static bool operator >=(TimePeriod leftTime, TimePeriod rightTime) => leftTime.CompareTo(rightTime) >= 0;
         public static bool operator <(TimePeriod leftTime, TimePeriod rightTime) => leftTime.CompareTo(rightTime) < 0;
         public static bool operator <=(TimePeriod leftTime, TimePeriod rightTime) => leftTime.CompareTo(rightTime) <= 0;
-        public static long operator +(TimePeriod leftTime, TimePeriod rightTime) => leftTime.totalSeconds + rightTime.totalSeconds;
+        public static TimePeriod operator +(TimePeriod leftTime, TimePeriod rightTime) => new TimePeriod(leftTime.totalSeconds + rightTime.totalSeconds);
+        public static TimePeriod operator -(TimePeriod leftTime, TimePeriod rightTime) => new TimePeriod(leftTime.totalSeconds - rightTime.totalSeconds);
 
 
     }
