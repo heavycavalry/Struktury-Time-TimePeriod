@@ -3,6 +3,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Time
 {
+
+    //zmienna typu Time opisuje punkt w czasie, w przedziale 00:00:00 … 23:59:59
+    //(weź pod uwagę arytmetykę modulo w godzinach %24 oraz minutach i sekundach %60
+    //-- wtedy, kiedy to będzie sensowne i wymagane)
+
     struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod>
     {
         readonly private long totalSeconds;
@@ -56,7 +61,21 @@ namespace Time
         {
             return HashCode.Combine(totalSeconds);
         }
-    }
 
+        public override bool Equals(object obj)
+        {
+            return false;
+        }
+
+        public static bool operator ==(TimePeriod leftTime, TimePeriod rightTime) => leftTime.Equals(rightTime);
+        public static bool operator !=(TimePeriod leftTime, TimePeriod rightTime) => !(leftTime.Equals(rightTime));
+        public static bool operator >(TimePeriod leftTime, TimePeriod rightTime) => leftTime.CompareTo(rightTime) > 0;
+        public static bool operator >=(TimePeriod leftTime, TimePeriod rightTime) => leftTime.CompareTo(rightTime) >= 0;
+        public static bool operator <(TimePeriod leftTime, TimePeriod rightTime) => leftTime.CompareTo(rightTime) < 0;
+        public static bool operator <=(TimePeriod leftTime, TimePeriod rightTime) => leftTime.CompareTo(rightTime) <= 0;
+        public static long operator +(TimePeriod leftTime, TimePeriod rightTime) => leftTime.totalSeconds + rightTime.totalSeconds;
+
+
+    }
 
 }
