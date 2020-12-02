@@ -8,7 +8,7 @@ namespace Time
     //(weź pod uwagę arytmetykę modulo w godzinach %24 oraz minutach i sekundach %60
     //-- wtedy, kiedy to będzie sensowne i wymagane)
 
-    struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod>
+    public struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod>
     {
         readonly private long totalSeconds;
         public long hours { get => totalSeconds / 3600; }

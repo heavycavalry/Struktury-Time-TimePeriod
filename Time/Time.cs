@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Time
 {
-    struct Time : IComparable<Time>, IEquatable<Time>
+    public struct Time : IComparable<Time>, IEquatable<Time>
     {
 
         public byte Hours { get; }
