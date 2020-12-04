@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 
 namespace Time
 {
     public struct Time : IComparable<Time>, IEquatable<Time>
     {
+        private int totalseconds
+        {
+            get
+            {
+                return Hours * 3600 + Minutes * 60 + Seconds;
 
+            }
+        }
         public byte Hours { get; }
         public byte Minutes { get; }
         public byte Seconds { get; }
+
 
         public Time(byte hours, byte minutes = 0, byte seconds = 0)
         {
@@ -18,9 +27,18 @@ namespace Time
 
             if (hours > 24 || hours < 0 || minutes >= 60 || minutes < 0 || seconds >= 60 || seconds < 0) { throw new ArgumentOutOfRangeException(); }
 
-            //if (hours > 10) { $"{hours:D2}"}
+        }
 
+        public Time(long totalseconds)
+        {
+            if (totalseconds > (24 * 3600))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
 
+            Hours = Convert.ToByte(totalseconds / 3600);
+            Minutes = Convert.ToByte(totalseconds % 3600 / 60);
+            Seconds = Convert.ToByte(totalseconds % 60);
         }
 
         public Time(string timeString)
@@ -41,6 +59,13 @@ namespace Time
         public static bool operator <(Time leftTime, Time rightTime) => leftTime.CompareTo(rightTime) < 0;
         public static bool operator <=(Time leftTime, Time rightTime) => leftTime.CompareTo(rightTime) <= 0;
 
+
+        public Time Plus(TimePeriod tp)
+        {
+            long total = this.totalseconds + tp.totalsecondss;
+            Time newTime = new Time(total);
+            return newTime;
+        }
 
         public int CompareTo([AllowNull] Time other)
         {

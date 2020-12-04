@@ -10,6 +10,8 @@ namespace Time
 
     public struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod>
     {
+
+        public long totalsecondss { get { return totalSeconds; } } //???
         readonly private long totalSeconds;
         public long hours { get => totalSeconds / 3600; }
         public long minutes { get => (totalSeconds % 3600) / 60; }
