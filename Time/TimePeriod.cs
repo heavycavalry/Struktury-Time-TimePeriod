@@ -11,11 +11,11 @@ namespace Time
     public struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod>
     {
 
-        public long totalsecondss { get { return totalSeconds; } } //???
+        public long TotalSeconds { get { return totalSeconds; } }
         readonly private long totalSeconds;
-        public long hours { get => totalSeconds / 3600; }
-        public long minutes { get => (totalSeconds % 3600) / 60; }
-        public long seconds { get => totalSeconds % 60; }
+        public long Hours { get => totalSeconds / 3600; }
+        public long Minutes { get => (totalSeconds % 3600) / 60; }
+        public long Seconds { get => totalSeconds % 60; }
 
         public TimePeriod(long seconds) => totalSeconds = seconds;
 
@@ -41,7 +41,7 @@ namespace Time
             totalSeconds = ToSeconds(hours, minutes, seconds);
         }
 
-        override public string ToString() => $"{hours}:{minutes:D2}:{seconds:D2}";
+        override public string ToString() => $"{Hours}:{Minutes:D2}:{Seconds:D2}";
 
         public static long ToSeconds(Time t) => t.Hours * 3600 + t.Minutes * 60 + t.Seconds;
         public static long ToSeconds(long h, long m, long s) => h * 3600 + m * 60 + s;

@@ -6,6 +6,7 @@ namespace Time
 {
     public struct Time : IComparable<Time>, IEquatable<Time>
     {
+        readonly public static int secondsInHour = 24 * 3600;
         private int totalseconds
         {
             get
@@ -25,7 +26,7 @@ namespace Time
             Hours = hours;
             Minutes = minutes;
 
-            if (hours > 24 || hours < 0 || minutes >= 60 || minutes < 0 || seconds >= 60 || seconds < 0) { throw new ArgumentOutOfRangeException(); }
+            if (hours > 23 || hours < 0 || minutes >= 60 || minutes < 0 || seconds >= 60 || seconds < 0) { throw new ArgumentOutOfRangeException(); }
 
         }
 
@@ -58,14 +59,32 @@ namespace Time
         public static bool operator >=(Time leftTime, Time rightTime) => leftTime.CompareTo(rightTime) >= 0;
         public static bool operator <(Time leftTime, Time rightTime) => leftTime.CompareTo(rightTime) < 0;
         public static bool operator <=(Time leftTime, Time rightTime) => leftTime.CompareTo(rightTime) <= 0;
+        public static Time operator +(Time leftTime, TimePeriod tp) => leftTime.Plus(tp);
+        public static Time operator -(Time leftTime, TimePeriod tp) => leftTime.Minus(tp);
+
 
 
         public Time Plus(TimePeriod tp)
         {
-            long total = this.totalseconds + tp.totalsecondss;
+            long total = this.totalseconds + tp.TotalSeconds;
+            total %= secondsInHour;
+            if (total < 0) { total += secondsInHour; }
             Time newTime = new Time(total);
+
             return newTime;
         }
+
+
+        public Time Minus(TimePeriod tp)
+        {
+            long total = this.totalseconds - tp.TotalSeconds;
+            total %= secondsInHour;
+            if (total < 0) { total += secondsInHour; }
+            Time newTime = new Time(total);
+
+            return newTime;
+        }
+
 
         public int CompareTo([AllowNull] Time other)
         {
