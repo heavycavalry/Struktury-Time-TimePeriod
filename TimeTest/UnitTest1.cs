@@ -6,7 +6,7 @@ namespace Time.Test
     public class TimeTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ConstructorTest()
         {
             Time time = new Time(1);
             Assert.AreEqual("01:00:00", time.ToString());
@@ -44,7 +44,7 @@ namespace Time.Test
         {
 
             Time time = new Time(00, 00, 05);
-            Time time2 = new Time(24, 12, 12);
+            Time time2 = new Time(23, 12, 12);
             Time time3 = new Time(0, 0, 5);
 
             Assert.AreEqual(true, time.Equals(time3));
@@ -106,10 +106,63 @@ namespace Time.Test
         {
             Time t1 = new Time(35500);
             Time t2 = new Time(24500);
+            Time t3 = new Time(15500);
 
-            TimePeriod newOne = new TimePeriod(t1, t2);
 
-            Assert.IsTrue(newOne.TotalSeconds == 11000);
+            Assert.IsTrue(new TimePeriod(t1, t2).TotalSeconds == 11000);
+            Assert.IsTrue(new TimePeriod(t3, t1).TotalSeconds == -20000);
+
+        }
+
+        [TestMethod]
+
+        public void TimePeriodPlusOperatorTest()
+        {
+            TimePeriod t1 = new TimePeriod(35500);
+            TimePeriod t2 = new TimePeriod(50000);
+
+            Assert.IsTrue((t1 + t2).TotalSeconds == 85500);
+
+        }
+
+        [TestMethod]
+
+        public void TimePeriodMinusOperatorTest()
+        {
+            TimePeriod t1 = new TimePeriod(35500);
+            TimePeriod t2 = new TimePeriod(50000);
+
+            Assert.IsTrue((t1 - t2).TotalSeconds == -14500);
+            Assert.IsTrue((t2 - t1).TotalSeconds == 14500);
+
+        }
+
+        [TestMethod]
+
+        public void TimePeriodEqualOperatorTest()
+        {
+            TimePeriod t1 = new TimePeriod(35500);
+            TimePeriod t2 = new TimePeriod(50000);
+            TimePeriod t3 = new TimePeriod(50000);
+
+            Assert.IsFalse(t1 == t2);
+            Assert.IsTrue(t2 == t3);
+
+        }
+
+        [TestMethod]
+
+        public void TimePeriodOperatorsTest()
+        {
+            TimePeriod t1 = new TimePeriod(35500);
+            TimePeriod t2 = new TimePeriod(50000);
+            TimePeriod t3 = new TimePeriod(23, 59, 59);
+            TimePeriod t4 = new TimePeriod(50000);
+
+            Assert.IsTrue(t1 < t2);
+            Assert.IsTrue(t3 > t2);
+            Assert.IsTrue(t2 >= t4);
+            Assert.IsFalse(t3 <= t2);
 
         }
     }

@@ -4,10 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Time
 {
 
-    //zmienna typu Time opisuje punkt w czasie, w przedziale 00:00:00 … 23:59:59
-    //(weź pod uwagę arytmetykę modulo w godzinach %24 oraz minutach i sekundach %60
-    //-- wtedy, kiedy to będzie sensowne i wymagane)
-
     public struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod>
     {
 
